@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>The Rad Finch List</h1>
+
+<!-- Loop through each finch -->
+{% for finch in finches %}
+  <div class="card">
+    <div class="card-content">
+        <!-- provide title name with the scientific name of each finch in the database -->
+      <span class="card-title">{{ finch.scientific_name }}</span>
+        <!-- each available key value pair in the database, will be output to their corresponding section -->
+      <p>Breed: {{ finch.color }}</p>
+      <p>Description: {{ finch.description }}</p>
+        <!-- after checking over the database, verify the cluster size of each finch category -->
+      {% if finch.cluster_size > 0 %}
+        <p>Cluster Size: {{ finch.cluster_size}}</p>
+      {% else %}
+        <p>Cluster Size: No birds dog! I mean finches...</p>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}
