@@ -12,7 +12,7 @@
         <!-- each available key value pair in the database, will be output to their corresponding section -->
       <p>Color: {{ finch.color }}</p>
       <p>Description: {{ finch.description }}</p>
-      <a href="/finches/{{finch.id}}">View</a>
+      <a href="{% url 'detail' finch.id %}">View</a>
     </div>
   </div>
 {% endfor %}
