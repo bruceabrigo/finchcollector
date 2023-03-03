@@ -27,3 +27,12 @@ def finch_index(request):
     return render(request, 'finches/index.html', {
         'finches': finches
     })
+
+def finch_detail(request, finch_id):
+    # take in a finch_id from the param
+    # create sql get request to define and GET finch_id
+    # after GET, render a single finch by its ID
+    finch = Finch.objects.get(id=finch_id)
+    return render(request, 'finches/detail.html', {
+        'finch': finch
+    })

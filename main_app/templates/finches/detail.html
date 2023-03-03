@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Viewing {{finch.s_name}}</h1>
+
+<!-- Loop through each finch -->
+  <div class="card">
+    <div class="card-content">
+        <!-- provide title name with the scientific name of each finch in the database -->
+      <span class="card-title">{{ finch.s_name }}</span>
+        <!-- each available key value pair in the database, will be output to their corresponding section -->
+      <p>Color: {{ finch.color }}</p>
+      <p>Description: {{ finch.description }}</p>
+    </div>
+  </div>
+
+{% endblock %}
