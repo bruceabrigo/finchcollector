@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Finch
 
 # create dumby finch data in a python list 
@@ -36,3 +36,16 @@ def finch_detail(request, finch_id):
     return render(request, 'finches/detail.html', {
         'finch': finch
     })
+
+class FinchCreate(CreateView):
+    model = Finch
+    fields = '__all__'
+
+class FinchUpdate(UpdateView):
+    model = Finch
+    # we only want certain fields
+    fields = ['color', 'description']
+
+class FinchDelete(DeleteView):
+    model = Finch
+    success_url = '/finches'

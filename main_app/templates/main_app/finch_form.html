@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if object%}
+        <h1><span>{{object.s_name}}</span></h1>
+    {% else %}
+    <h1>Add Finch</h1>
+    {% endif %}
+    <!-- by leaving the action empty, this allows the for to submit to the same url that was used to render it -->
+    <!-- the submit chages the HTTP to POST  -->
+    <form action="" method="post">
+        <!-- Django requres is our cross-site resource token -->
+        {% csrf_token %}
+        <table>
+            <!-- we render the inputs inside of a table with <tr>s and <td>s -->
+                {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit!" class="btn">
+    </form>
+
+{% endblock %}
