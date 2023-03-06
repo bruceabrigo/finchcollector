@@ -36,11 +36,17 @@ def finch_detail(request, finch_id):
     # create sql get request to define and GET finch_id
     # after GET, render a single finch by its ID
     finch = Finch.objects.get(id=finch_id)
+
+    # define a list of toy id's
+    id_list = finch.toys.all().values_list('id')
+    # define a list of unassociated toys to cat 
+    does_not_own = Toy.objects.exclude(id__in=id_list)
     # from our form import, we need to include the Feeding Form
     feeding_form = FeedingForm()
     return render(request, 'finches/detail.html', {
         'finch': finch,
-        'feeding_form': feeding_form
+        'feeding_form': feeding_form,
+        'toys': does_not_own
     })
 
 class FinchCreate(CreateView):
@@ -67,6 +73,15 @@ def add_feeding(request, finch_id):
         new_feeding.save()
     return redirect('detail', finch_id=finch_id)
 
+# associate toy to finch
+def assoc_toy(request, finch_id, toy_id):
+    Finch.objects.get(id=finch_id).toys.add(toy_id)
+    return redirect('detail', finch_id=finch_id)
+
+# remove association of toy to finch
+def unassoc_toy(request, finch_id, toy_id):
+    Finch.objects.get(id=finch_id).toys.remove(toy_id)
+    return redirect('detail', finch_id=finch_id)
 # define a toy class
 class ToyList(ListView):
     model = Toy
