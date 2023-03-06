@@ -2,20 +2,38 @@
 {% block content %}
 
 <h1>Viewing {{finch.s_name}}</h1>
-
+<div class="row">
+    <!-- separate cards in different columns  -->
+    <div class="col s6">
 <!-- Loop through each finch -->
-  <div class="card">
-    <div class="card-content">
-        <!-- provide title name with the scientific name of each finch in the database -->
-      <span class="card-title">{{ finch.s_name }}</span>
-        <!-- each available key value pair in the database, will be output to their corresponding section -->
-      <p>Color: {{ finch.color }}</p>
-      <p>Description: {{ finch.description }}</p>
+    <div class="card">
+        <div class="card-content">
+            <!-- provide title name with the scientific name of each finch in the database -->
+            <span class="card-title">{{ finch.s_name }}</span>
+            <!-- each available key value pair in the database, will be output to their corresponding section -->
+            <p>Color: {{ finch.color }}</p>
+            <p>Description: {{ finch.description }}</p>
+        </div>
+            <div class="card-action">
+                <a href="{% url 'finches_update' finch.id %}">Edit</a>
+                <a href="{% url 'finches_delete' finch.id %}">Delete</a>
+            </div>
+        </div>
     </div>
-    <div class="card-action">
-      <a href="{% url 'finches_update' finch.id %}">Edit</a>
-      <a href="{% url 'finches_delete' finch.id %}">Delete</a>
-  </div>
-  </div>
-
+    <div class="col s6">
+        <table class="striped">
+            <thead>
+                <tr><th>Date</th><th>Meal</th></tr>
+            </thead>
+            <tbody>
+                {% for feeding in finch.feeding_set.all %}
+                <tr>
+                    <td>{{feeding.date}}</td>
+                    <td>{{feeding.get_meal_display}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
